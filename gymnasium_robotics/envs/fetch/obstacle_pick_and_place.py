@@ -241,49 +241,37 @@ class MujocoFetchObstaclePickAndPlaceEnv(MujocoFetchEnv, EzPickle):
                 "desired_goal": self.goal.copy(),
             }
     
-    def _reset_sim_modified(self):
+    def _reset_sim(self):
         self.data.time = self.initial_time
         self.data.qpos[:] = np.copy(self.initial_qpos)
         self.data.qvel[:] = np.copy(self.initial_qvel)
         if self.model.na != 0:
             self.data.act[:] = None
 
-        # Randomize start position of object.
+                # Randomize start position of object.
         if self.has_object:
-            table_size = [0.25, 0.35]  # [x-size, y-size] from XML
-            obstacle_pos = [0, 0]  # x,y position from XML
-            obstacle_size = [0.025, 0.5]  # [x-size, y-size] from XML
-            table_height = 0.2 + 0.025  # table z-pos + half of object height
+            object_xpos = self.initial_gripper_xpos[:2]
+            while np.linalg.norm(object_xpos - self.initial_gripper_xpos[:2]) < 0.1:
+                object_xpos = self.initial_gripper_xpos[:2] + self.np_random.uniform(
+                    -self.obj_range, self.obj_range, size=2
+                )
             
-            # Define valid regions on the table for object placement
-            valid_regions = [
-                [-table_size[0], obstacle_pos[0] - obstacle_size[0]],  # left region
-                [obstacle_pos[0] + obstacle_size[0], table_size[0]]    # right region
-            ]
-            
-            # Randomly choose a region
-            chosen_region = self.np_random.choice(valid_regions)
-            
-            # Generate a random position within the chosen region
-            object_xpos = [
-                self.np_random.uniform(chosen_region[0], chosen_region[1]),
-                self.np_random.uniform(-table_size[1], table_size[1])
-            ]
-            
-            # Set the object's position
+            # Check the condition for x and y and adjust the position if needed
+            if abs(object_xpos[0]) < 0.1 and abs(object_xpos[1]) < 0.5:
+                object_xpos[0] += 0.2 if object_xpos[0] >= 0 else -0.2
+
             object_qpos = self._utils.get_joint_qpos(
                 self.model, self.data, "object0:joint"
             )
             assert object_qpos.shape == (7,)
             object_qpos[:2] = object_xpos
-            object_qpos[2] = table_height  # set z-position to table's top surface
             self._utils.set_joint_qpos(
                 self.model, self.data, "object0:joint", object_qpos
             )
 
+
         self._mujoco.mj_forward(self.model, self.data)
         return True
-
 # Provide the modified _reset_sim_modified function
 #_reset_sim_modified
 
@@ -357,4 +345,3 @@ class MujocoFetchObstaclePickAndPlaceEnv(MujocoFetchEnv, EzPickle):
             gripper_to_obstacle,
             object_to_obstacle
         )
-

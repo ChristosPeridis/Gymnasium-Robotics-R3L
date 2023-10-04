@@ -181,21 +181,29 @@ class MujocoFetchObstaclePickAndPlaceEnv(MujocoFetchEnv, EzPickle):
     
 
     def _sample_goal(self):
-        while True:
-            if self.has_object:
-                goal = self.initial_gripper_xpos[:3] + self.np_random.uniform(
-                    -self.target_range, self.target_range, size=3
-                )
-                goal += self.target_offset
-                goal[2] = self.height_offset
-                if self.target_in_the_air and self.np_random.uniform() < 0.5:
-                    goal[2] += self.np_random.uniform(0, 0.45)
+        if self.has_object:
+            goal = self.initial_gripper_xpos[:3] + self.np_random.uniform(
+                -self.target_range, self.target_range, size=3
+            )
+            goal += self.target_offset
+            goal[2] = self.height_offset
+            if self.target_in_the_air and self.np_random.uniform() < 0.5:
+                goal[2] += self.np_random.uniform(0, 0.45)
+        else:
+            goal = self.initial_gripper_xpos[:3] + self.np_random.uniform(
+                -self.target_range, self.target_range, size=3
+            )
+
+        # Check if the goal is within the specified region
+        if abs(goal[0]) < 0.1 and abs(goal[1]) < 0.5 and abs(goal[2] - 0.1) < 1e-5:
+            # Move the goal in the x-axis by 0.2
+            if goal[0] < 0:
+                goal[0] -= 0.25  # Move to the left if the x was negative
             else:
-                goal = self.initial_gripper_xpos[:3] + self.np_random.uniform(
-                    -self.target_range, self.target_range, size=3
-                )
-            if not self.is_within_obstacle(goal):
-                return goal.copy()
+                goal[0] += 0.25  # Move to the right if the x was positive or zero
+
+        return goal
+
 
     
     def _get_obs(self):
@@ -258,7 +266,7 @@ class MujocoFetchObstaclePickAndPlaceEnv(MujocoFetchEnv, EzPickle):
             
             # Check the condition for x and y and adjust the position if needed
             if abs(object_xpos[0]) < 0.1 and abs(object_xpos[1]) < 0.5:
-                object_xpos[0] += 0.2 if object_xpos[0] >= 0 else -0.2
+                object_xpos[0] += 0.25 if object_xpos[0] >= 0 else -0.25
 
             object_qpos = self._utils.get_joint_qpos(
                 self.model, self.data, "object0:joint"

@@ -195,12 +195,12 @@ class MujocoFetchObstaclePickAndPlaceEnv(MujocoFetchEnv, EzPickle):
             )
 
         # Check if the goal is within the specified region
-        if abs(goal[0]) > 1.270 and abs(goal[0]) < 1.330:
+        if abs(goal[0]) > 1.260 and abs(goal[0]) < 1.335:
             # Move the goal in the x-axis by 0.2
             if goal[0] < 1.3:
                 goal[0] -= 0.05  # Move to the left if the x was negative
             else:
-                goal[0] += 0.  # Move to the right if the x was positive or zero
+                goal[0] += 0.05  # Move to the right if the x was positive or zero
 
         return goal
 

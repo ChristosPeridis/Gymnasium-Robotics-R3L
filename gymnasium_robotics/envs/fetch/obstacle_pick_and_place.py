@@ -265,7 +265,7 @@ class MujocoFetchObstaclePickAndPlaceEnv(MujocoFetchEnv, EzPickle):
                 )
             
             # Check the condition for x and y and adjust the position if needed
-            if abs(object_xpos[0]) > 1.260 and abs(object_xpos[0]) < 1.35:
+            if abs(object_xpos[0]) > 1.25 and abs(object_xpos[0]) < 1.35:
                 object_xpos[0] += 0.05 if object_xpos[0] >= 1.3 else -0.05
 
             object_qpos = self._utils.get_joint_qpos(

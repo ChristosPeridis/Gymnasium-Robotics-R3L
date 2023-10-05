@@ -195,12 +195,12 @@ class MujocoFetchObstaclePickAndPlaceEnv(MujocoFetchEnv, EzPickle):
             )
 
         # Check if the goal is within the specified region
-        if abs(goal[0]) < 0.1 and abs(goal[1]) < 0.5 and abs(goal[2] - 0.1) < 1e-5:
+        if abs(goal[0]) > 1.270 and abs(goal[0]) < 1.330:
             # Move the goal in the x-axis by 0.2
-            if goal[0] < 0:
-                goal[0] -= 0.25  # Move to the left if the x was negative
+            if goal[0] < 1.3:
+                goal[0] -= 0.05  # Move to the left if the x was negative
             else:
-                goal[0] += 0.25  # Move to the right if the x was positive or zero
+                goal[0] += 0.  # Move to the right if the x was positive or zero
 
         return goal
 
@@ -265,8 +265,8 @@ class MujocoFetchObstaclePickAndPlaceEnv(MujocoFetchEnv, EzPickle):
                 )
             
             # Check the condition for x and y and adjust the position if needed
-            if abs(object_xpos[0]) < 0.1 and abs(object_xpos[1]) < 0.5:
-                object_xpos[0] += 0.25 if object_xpos[0] >= 0 else -0.25
+            if abs(object_xpos[0]) > 1.260 and abs(object_xpos[0]) < 1.335 and abs(object_xpos[1]) > 0.575 and abs(object_xpos[1]) < 0.925:
+                object_xpos[0] += 0.05 if object_xpos[0] >= 1.3 else -0.05
 
             object_qpos = self._utils.get_joint_qpos(
                 self.model, self.data, "object0:joint"

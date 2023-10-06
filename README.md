@@ -1,5 +1,3 @@
-![image](https://github.com/ChristosPeridis/Gymnasium-Robotics-R3L/assets/34765945/b185204e-80b7-4727-89ba-7b40be1f83fb)
-
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Farama-Foundation/Gymnasium-Robotics/main/gymrobotics-revised-text.png" width="500px"/>

@@ -219,6 +219,9 @@ def get_site_xpos(model, data, name):
     site_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_SITE, name)
     return data.site_xpos[site_id]
 
+def get_body_xpos(model, data, name):
+    body_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, name)
+    return data.xpos[body_id]
 
 def get_site_xvelp(model, data, name):
     site_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_SITE, name)

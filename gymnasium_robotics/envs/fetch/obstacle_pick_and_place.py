@@ -6,7 +6,7 @@ from gymnasium_robotics.envs.fetch import MujocoFetchEnv, MujocoPyFetchEnv
 from gymnasium_robotics.utils import rotations
 import numpy as np
 
-MODEL_XML_PATH = os.path.join("fetch", "corrected_pick_and_place_2.xml")
+MODEL_XML_PATH = os.path.join("fetch", "obstacle_pick_and_place.xml")
 X = 0
 Y = 0
 Z = 0.280
@@ -327,11 +327,11 @@ class MujocoFetchObstaclePickAndPlaceEnv(MujocoFetchEnv, EzPickle):
         )  # change to a scalar if the gripper is made symmetric
         
         # Extract the positions of the gripper and the object
-        grip_pos = self._utils.get_site_xpos(self.model, self.data, "robot0:grip")
-        object_pos = self._utils.get_site_xpos(self.model, self.data, "object0")
+        #grip_pos = self._utils.get_site_xpos(self.model, self.data, "robot0:grip")
+        #object_pos = self._utils.get_site_xpos(self.model, self.data, "object0")
         
         # Calculate the obstacle's position (assuming its site name is "obstacle")
-        obstacle_pos = self._utils.get_site_xpos(self.model, self.data, "obstacle")
+        obstacle_pos = self._utils.get_body_xpos(self.model, self.data, "obstacle0")
         
         # Calculate the relative positions
         gripper_to_obstacle = obstacle_pos - grip_pos

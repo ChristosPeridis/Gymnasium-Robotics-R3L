@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://github.com/ChristosPeridis/Gymnasium-Robotics-R3L/blob/main/logo.png" width="700px"/>
+  <img src="https://github.com/ChristosPeridis/Gymnasium-Robotics-R3L/blob/main/Gymnasium-Robotics-R3L_logo.png" width="700px"/>
 </p>
 
 This library contains a collection of Reinforcement Learning robotic environments that use the [Gymansium](https://gymnasium.farama.org/) API. The environments run with the [MuJoCo](https://mujoco.org/) physics engine and the maintained [mujoco python bindings](https://mujoco.readthedocs.io/en/latest/python.html) This repository is based on the original [Gymnasium-Robotics](https://github.com/Farama-Foundation/Gymnasium-Robotics) API and further expands it to host more simulated environments based on the needs of the [R3L](https://github.com/ChristosPeridis/R3L)  project.

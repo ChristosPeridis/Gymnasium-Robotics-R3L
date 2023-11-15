@@ -9,7 +9,7 @@ This library contains a collection of Reinforcement Learning robotic environment
 
 It is recomended to use a Python environment with `Python >= 3.8`, (support for versions < 3.8 has been stopped and newer environments, such us `FetchObstaclePickAndPlace`, are not supported in older Python versions). 
 To install the Gymnasium-Robotics-R3L library to your custom Python environment follow the steps bellow:
-1. Clone this repository by running the following command on the terminal: `git clonehttps://github.com/ChristosPeridis/Gymnasium-Robotics-R3L.git`
+1. Clone this repository by running the following command on the terminal: `git clone https://github.com/ChristosPeridis/Gymnasium-Robotics-R3L.git`
 2. Navigate to the project's folder: `cd Gymnasium-Robotics-R3L`
 3. Install the Gymnasium-Robotics-R3L API with its dependancies by running: `pip install -e.`
 

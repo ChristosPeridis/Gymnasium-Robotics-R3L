@@ -1,27 +1,24 @@
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Farama-Foundation/Gymnasium-Robotics/main/gymrobotics-revised-text.png" width="500px"/>
+  <img src="https://github.com/ChristosPeridis/Gymnasium-Robotics-R3L/blob/main/logo.png" width="700px"/>
 </p>
 
-This library contains a collection of Reinforcement Learning robotic environments that use the [Gymansium](https://gymnasium.farama.org/) API. The environments run with the [MuJoCo](https://mujoco.org/) physics engine and the maintained [mujoco python bindings](https://mujoco.readthedocs.io/en/latest/python.html).
-
-The documentation website is at [robotics.farama.org](https://robotics.farama.org/), and we have a public discord server (which we also use to coordinate development work) that you can join here: [https://discord.gg/YymmHrvS](https://discord.gg/YymmHrvS)
+This library contains a collection of Reinforcement Learning robotic environments that use the [Gymansium](https://gymnasium.farama.org/) API. The environments run with the [MuJoCo](https://mujoco.org/) physics engine and the maintained [mujoco python bindings](https://mujoco.readthedocs.io/en/latest/python.html) This repository is based on the original [Gymnasium-Robotics](https://github.com/Farama-Foundation/Gymnasium-Robotics) API and further expands it to host more simulated environments based on the needs of the [R3L](https://github.com/ChristosPeridis/R3L)  project.
 
 ## Installation
 
-To install the Gymnasium-Robotics environments use `pip install gymnasium-robotics`
+It is recomended to use a Python environment with `Python >= 3.8`, (support for versions < 3.8 has been stopped and newer environments, such us `FetchObstaclePickAndPlace`, are not supported in older Python versions). 
+To install the Gymnasium-Robotics-R3L library to your custom Python environment follow the steps bellow:
+1. Clone this repository by running the following command on the terminal: `git clonehttps://github.com/ChristosPeridis/Gymnasium-Robotics-R3L.git`
+2. Navigate to the project's folder: `cd Gymnasium-Robotics-R3L`
+3. Install the Gymnasium-Robotics-R3L API with its dependancies by running: `pip install -e.`
 
-These environments also require the MuJoCo engine from Deepmind to be installed. Instructions to install the physics engine can be found at the [MuJoCo website](https://mujoco.org/) and the [MuJoCo Github repository](https://github.com/deepmind/mujoco).  
-
-Note that the latest environment versions use the latest mujoco python bindings maintained by the MuJoCo team. If you wish to use the old versions of the environments that depend on [mujoco-py](https://github.com/openai/mujoco-py), please install this library with `pip install gymnasium-robotics[mujoco-py]`
-
-We support and test for Python 3.8, 3.9, 3.10 and 3.11 on Linux and macOS. We will accept PRs related to Windows, but do not officially support it.
 
 ## Environments
 
-`Gymnasium-Robotics` includes the following groups of environments:
+`Gymnasium-Robotics-R3L` includes the following groups of environments:
 
-* [Fetch](https://robotics.farama.org/envs/fetch/) - A collection of environments with a 7-DoF robot arm that has to perform manipulation tasks such as Reach, Push, Slide or Pick and Place.
+* [Fetch](https://robotics.farama.org/envs/fetch/) - A collection of environments with a 7-DoF robot arm that has to perform manipulation tasks such as Reach, Push, Slide, Pick and Place or Obstacle Pick and Place.
 * [Shadow Dexterous Hand](https://robotics.farama.org/envs/shadow_dexterous_hand/) - A collection of environments with a 24-DoF anthropomorphic robotic hand that has to perform object manipulation tasks with a cube, egg-object, or pen. There are variations of these environments that also include data from 92 touch sensors in the observation space.
 
 The [D4RL](https://github.com/Farama-Foundation/D4RL) environments are now available. These environments have been refactored and may not have the same action/observation spaces as the original, please read their documentation:
@@ -70,19 +67,10 @@ substitute_truncated = env.compute_truncated(obs["achieved_goal"], substitute_go
 The `GoalEnv` class can also be used for custom environments.
 
 ## Project Maintainers
-Main Contributors: [Rodrigo Perez-Vicente](https://github.com/rodrigodelazcano), [Kallinteris Andreas](https://github.com/Kallinteris-Andreas), [Jet Tai](https://github.com/jjshoots) 
+Main Contributors: [Christos Peridis](https://github.com/ChristosPeridis)
 
 Maintenance for this project is also contributed by the broader Farama team: [farama.org/team](https://farama.org/team).
 
-## Citation
 
-If you use this in your research, please cite:
-```
-@software{gymnasium_robotics2023github,
-  author = {Rodrigo de Lazcano and Kallinteris Andreas and Jun Jet Tai and Seungjae Ryan Lee and Jordan Terry},
-  title = {Gymnasium Robotics},
-  url = {http://github.com/Farama-Foundation/Gymnasium-Robotics},
-  version = {1.2.0},
-  year = {2023},
-}
-```
+> **Note:** The Gymnasium-Robotics-R3L API is using the latest Python bindings for MuJoCo, developed and maintened by the Google DeepMind team. This decision has been made to simplify the installation process of the API and make it more cross platform compatible. The original MuJoCo_Py bindings have been tested and proven to be difficult and time-consuming to setup. The configuration can go wrong very easily. Different version of MuJoCo simulator support different versions of MuJoCo_Py bindings and specific versions of MuJoCo_Py bindings require specific builds of Python done by specific gcc compilers.
+The API supports Python versions >= 3.8. The works of this API have been developed and tested with Python 3.9. We support Linux, Server-Linux and Windows11 through WSL2.

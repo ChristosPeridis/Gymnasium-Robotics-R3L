@@ -2,7 +2,7 @@ import mujoco
 import numpy as np
 import time
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
-from gymnasium_robotics.utils import extract_mj_names
+from gymnasium_robotics.utils import mujoco_utils
 
 # Path to the XML file for the gripper
 xml_path = '../gymnasium_robotics/envs/assets/ur5e_gripper/scene.xml'
@@ -31,7 +31,7 @@ def get_actuator_index(model, data, actuator_name):
             _actuator_names,
             _actuator_name2id,
             _actuator_id2name,
-        ) = extract_mj_names(model, mujoco.mjtObj.mjOBJ_ACTUATOR)
+        ) = mujoco_utils.extract_mj_names(model, mujoco.mjtObj.mjOBJ_ACTUATOR)
 # Actuate the gripper
 def actuate_gripper(control_input):
     print(data.ctrl)

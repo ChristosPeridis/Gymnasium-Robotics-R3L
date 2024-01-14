@@ -18,7 +18,7 @@ renderer = MujocoRenderer(model, data)
 time_step = model.opt.timestep
 
 # Control parameters
-max_control = 255  # Maximum control input for opening
+max_control = 1  # Maximum control input for opening
 min_control = 0    # Minimum control input for closing
 duration = 60      # Total duration of the script in seconds
 cycles = 5         # Number of open-close cycles
@@ -27,16 +27,20 @@ cycle_duration = duration / cycles
 actuator_index = None
 
 def get_actuator_index(model, data, actuator_name):
-         (
-            _actuator_names,
-            _actuator_name2id,
-            _actuator_id2name,
-        ) = mujoco_utils.extract_mj_names(model, mujoco.mjtObj.mjOBJ_ACTUATOR)
+         
+        actuator_names, actuator_name2id, actuator_id2name = mujoco_utils.extract_mj_names(model, mujoco.mjtObj.mjOBJ_ACTUATOR)
+        actuator_index = actuator_name2id[actuator_name]
+        return actuator_index
 # Actuate the gripper
 def actuate_gripper(control_input):
     print(data.ctrl)
     data.ctrl[actuator_index] = control_input
     mujoco.mj_step(model, data)
+
+
+# Get the index of the gripper actuator
+actuator_index = get_actuator_index(model, data, "fingers_actuator")
+print("\n\nThis is the index of the gripper actuator:", actuator_index, "\n\n\n")
 
 print("These are the data controls:\n\n", data.ctrl, "\n\n")
 

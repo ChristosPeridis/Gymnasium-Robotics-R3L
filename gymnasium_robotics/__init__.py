@@ -90,6 +90,12 @@ def register_robotics_envs():
             max_episode_steps=50,
         )
 
+        register(
+            id=f"UR10eReach{suffix}-v0",
+            kwargs=kwargs,
+            max_episode_steps=50,
+        )
+
         # Hand
         register(
             id=f"HandReach{suffix}-v0",

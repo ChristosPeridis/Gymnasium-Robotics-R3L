@@ -1,7 +1,7 @@
 import mujoco
 import numpy as np
 import time
-import os
+from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
 
 # Load the XML model
 model = mujoco.MjModel.from_xml_path('mocap_model.xml')
@@ -10,11 +10,8 @@ data = mujoco.MjData(model)
 # Initialize the simulator
 mujoco.mj_forward(model, data)
 
-# Set up offscreen rendering with OSMesa
-width, height = 640, 480
-#os.environ['MUJOCO_GL'] = 'osmesa'
-ctx = mujoco.MjrContext(model, mujoco.mjtFontScale.mjFONTSCALE_150)
-buffer = mujoco.mjr_makeBuffer(ctx, width, height)
+# Create a renderer for the model
+renderer = MujocoRenderer(model, data)
 
 # Assuming the mocap body is the first one (index 0)
 mocap_body_index = 0
@@ -27,15 +24,7 @@ while True:
     # Step the simulation
     mujoco.mj_forward(model, data)
 
-    # Update and render the scene offscreen
-    scn = mujoco.MjvScene(model, 0)
-    mujoco.mjv_updateScene(model, data, mujoco.MjvOption(), None, mujoco.MjvCamera(), mujoco.mjtCatBit.mjCAT_ALL, scn)
-    mujoco.mjr_renderOffscreen(scn, buffer, ctx)
-
-    # Do something with the rendered image in buffer
-    # For example, save it to a file or process it
+    # Render the scene
+    renderer.render(render_mode="human")
 
     time.sleep(0.01)  # Small delay to make the simulation visible
-
-mujoco.mjr_freeBuffer(buffer)
-mujoco.mjr_freeContext(ctx)

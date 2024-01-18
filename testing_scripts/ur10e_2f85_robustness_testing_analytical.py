@@ -4,6 +4,7 @@ import numpy as np
 import time
 import math
 
+
 # Load the UR10e model with the 2F85 gripper from the provided XML file
 model = mujoco.MjModel.from_xml_path('gymnasium_robotics/envs/assets/ur10e_gripper/scene.xml')
 data = mujoco.MjData(model)
@@ -16,6 +17,10 @@ duration = 60  # Duration of the simulation in seconds
 time_step = 0.01  # Simulation time step
 n_steps = int(duration / time_step)
 
+# Get the indices of the robot and gripper actuators
+robot_actuator_indices = [i for i in range(model.nu - 2)]
+gripper_actuator_indices = [i for i in range(model.nu - 2, model.nu)]
+
 # Control loop
 for step in range(n_steps):
     # Sinusoidal control input for each joint of the robot
@@ -26,11 +31,9 @@ for step in range(n_steps):
     gripper_phase = math.pi * (step // (n_steps // 2))  # Switch between 0 and π halfway through
     gripper_control_input = [math.sin(gripper_phase) for _ in range(2)]  # Assuming 2 DOF for the gripper
 
-    # Combine control inputs for the robot and the gripper
-    control_input = robot_control_input + gripper_control_input
-    
     # Apply control input to the robot and the gripper
-    data.ctrl[:] = control_input
+    data.ctrl[robot_actuator_indices] = robot_control_input
+    data.ctrl[gripper_actuator_indices] = gripper_control_input
 
     # Step the simulation
     mujoco.mj_step(model, data)

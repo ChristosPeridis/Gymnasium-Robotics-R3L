@@ -1,6 +1,7 @@
 <mujoco model="ur10e_2f85">
   <compiler angle="radian" meshdir="../objs_stls/ur10e_2f85" autolimits="true"/>
 
+  <option integrator="RK4"/>
   <!--<option integrator="implicitfast"/>-->
   <!-- <option impratio="10"/> -->
   <option impratio="10"/>

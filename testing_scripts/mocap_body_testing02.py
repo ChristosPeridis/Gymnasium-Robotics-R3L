@@ -11,6 +11,17 @@ def load_model_from_xml(xml_path: str) -> Any:
     model = mujoco.MjModel.from_xml_string(xml_string)
     return model
 
+def move_mocap_body(model: MjModel, data: MjData, t: float) -> None:
+    # Example motion: move the mocap body in a circular path in the XY plane
+    radius = 0.5  # radius of the circle
+    x = radius * np.cos(t)
+    y = radius * np.sin(t)
+    z = 1  # constant height
+
+    # Update position
+    data.mocap_pos[0, :] = [x, y, z]
+    # Optionally, you could also update the orientation (quaternion) if needed
+
 def main():
     # Load the model
     model = mujoco.MjModel.from_xml_path('../gymnasium_robotics/envs/assets/ur10e_gripper/scene-testing.xml')
@@ -21,8 +32,16 @@ def main():
     # Create the Mujoco Renderer
     renderer = MujocoRenderer(model, data)
 
+    # Time variable for the motion
+    t = 0
+    dt = 0.01  # time step
+
     # Simulation loop
     while True:
+        # Update mocap body position
+        move_mocap_body(model, data, t)
+        t += dt
+
         # Step the simulation
         mujoco.mj_step(model, data)
 

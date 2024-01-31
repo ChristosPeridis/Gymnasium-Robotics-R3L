@@ -237,6 +237,16 @@ def get_site_xvelr(model, data, name):
     return xvelp
 
 
+def get_mocap_pos(model, data, name):
+    body_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, name)
+    mocap_id = model.body_mocapid[body_id]
+    return data.mocap_pos[mocap_id]
+
+def get_mocap_quat(model, data, name):
+    body_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, name)
+    mocap_id = model.body_mocapid[body_id]
+    return data.mocap_quat[mocap_id]
+
 def set_mocap_pos(model, data, name, value):
     body_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, name)
     mocap_id = model.body_mocapid[body_id]

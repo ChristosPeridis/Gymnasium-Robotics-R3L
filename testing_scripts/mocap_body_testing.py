@@ -12,13 +12,24 @@ data = mujoco.MjData(model)
 # Create a renderer
 renderer = MujocoRenderer(model, data)
 
-# Function to set the position of the mocap body
+# Set the position of the mocap body
 def set_mocap_pos(data, pos):
-    mocap_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, 'robot0:mocap')
-    if mocap_id >= len(data.mocap_pos):
-        print(f"Error: mocap_id {mocap_id} is out of bounds for mocap_pos with size {len(data.mocap_pos)}")
-        return
-    data.mocap_pos = pos
+        mjcu.set_body_pos(data, 'robot0:mocap', pos)
+        mjcu.set_body_quat(data, 'robot0:mocap', np.array([1, 0, 0, 0]))
+
+mujoco.mj_step(model, data)
+
+print("Dtata Specification of the Mocap Body:\n\n", model.body('robot0:mocap'), "\n\n\n\n")
+print("Currtent Position of the Mocap Body:", mjcu.get_body_pos(data, 'robot0:mocap'), "\n\n")
+print("Currtent Orientation of the Mocap Body:", mjcu.get_body_quat(data, 'robot0:mocap'), "\n\n") 
+
+
+mjcu.reset_mocap2body_xpos(model, data)
+
+
+print("Dtata Specification of the Mocap Body:\n\n", model.body('robot0:mocap'), "\n\n\n\n")
+print("Currtent Position of the Mocap Body:", mjcu.get_body_pos(data, 'robot0:mocap'), "\n\n")
+print("Currtent Orientation of the Mocap Body:", mjcu.get_body_quat(data, 'robot0:mocap'), "\n\n") 
 
 # Simulation loop
 while True:
@@ -26,6 +37,9 @@ while True:
     mujoco.mj_step(model, data)
 
     print("Dtata Specification of the Mocap Body:\n\n", model.body('robot0:mocap'), "\n\n\n\n")
+    print("Currtent Position of the Mocap Body:", mjcu.get_body_pos(data, 'robot0:mocap'), "\n\n")
+    print("Currtent Orientation of the Mocap Body:", mjcu.get_body_quat(data, 'robot0:mocap'), "\n\n") 
+
 
     # Render the simulation
     renderer.render(render_mode="human")

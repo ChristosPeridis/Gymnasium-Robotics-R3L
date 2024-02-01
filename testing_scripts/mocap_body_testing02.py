@@ -16,7 +16,7 @@ def move_mocap_body(model: MjModel, data: MjData, t: float) -> None:
     radius = 0.5  # radius of the circle
     x = radius * np.cos(t)
     y = radius * np.sin(t)
-    z = 1  # constant height
+    z = z =1 + 0.2* np.sin(t)
 
     # Update position
     data.mocap_pos[0, :] = [x, y, z]
@@ -35,6 +35,8 @@ def main():
     # Time variable for the motion
     t = 0
     dt = 0.01  # time step
+
+    mujoco_utils.reset_mocap_welds(model, data)
 
     # Simulation loop
     while True:

@@ -19,7 +19,7 @@ time_step = model.opt.timestep
 # Control parameters
 max_control = 255  # Maximum control input for opening
 min_control = 0    # Minimum control input for closing
-duration = 60      # Total duration of the script in seconds
+duration = 120      # Total duration of the script in seconds
 cycles = 5         # Number of open-close cycles
 cycle_duration = duration / cycles
 

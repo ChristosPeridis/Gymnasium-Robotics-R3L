@@ -188,10 +188,10 @@ class MujocoPyUR10eEnv(get_base_ur10e_env(MujocoPyRobotEnv)):
 
     def generate_mujoco_observations(self):
         # positions
-        grip_pos = self.sim.data.get_site_xpos("robot0:grip")
+        grip_pos = self.sim.data.get_site_xpos("pinch")
 
         dt = self.sim.nsubsteps * self.sim.model.opt.timestep
-        grip_velp = self.sim.data.get_site_xvelp("robot0:grip") * dt
+        grip_velp = self.sim.data.get_site_xvelp("pinch") * dt
 
         robot_qpos, robot_qvel = self._utils.robot_get_obs(self.sim)
         if self.has_object:
@@ -227,7 +227,7 @@ class MujocoPyUR10eEnv(get_base_ur10e_env(MujocoPyRobotEnv)):
         )
 
     def _get_gripper_xpos(self):
-        body_id = self.sim.model.body_name2id("robot0:gripper_link")
+        body_id = self.sim.model.body_name2id("pinchper_link")
         return self.sim.data.body_xpos[body_id]
 
     def _render_callback(self):
@@ -275,7 +275,7 @@ class MujocoPyUR10eEnv(get_base_ur10e_env(MujocoPyRobotEnv)):
         # Move end effector into position.
         gripper_target = np.array(
             [-0.498, 0.005, -0.431 + self.gripper_extra_height]
-        ) + self.sim.data.get_site_xpos("robot0:grip")
+        ) + self.sim.data.get_site_xpos("pinch")
         gripper_rotation = np.array([1.0, 0.0, 1.0, 0.0])
         self.sim.data.set_mocap_pos("robot0:mocap", gripper_target)
         self.sim.data.set_mocap_quat("robot0:mocap", gripper_rotation)
@@ -283,7 +283,7 @@ class MujocoPyUR10eEnv(get_base_ur10e_env(MujocoPyRobotEnv)):
             self.sim.step()
 
         # Extract information for sampling goals.
-        self.initial_gripper_xpos = self.sim.data.get_site_xpos("robot0:grip").copy()
+        self.initial_gripper_xpos = self.sim.data.get_site_xpos("pinch").copy()
         if self.has_object:
             self.height_offset = self.sim.data.get_site_xpos("object0")[2]
 
@@ -311,11 +311,11 @@ class MujocoUR10eEnv(get_base_ur10e_env(MujocoRobotEnv)):
 
     def generate_mujoco_observations(self):
         # positions
-        grip_pos = self._utils.get_site_xpos(self.model, self.data, "robot0:grip")
+        grip_pos = self._utils.get_site_xpos(self.model, self.data, "pinch")
 
         dt = self.n_substeps * self.model.opt.timestep
         grip_velp = (
-            self._utils.get_site_xvelp(self.model, self.data, "robot0:grip") * dt
+            self._utils.get_site_xvelp(self.model, self.data, "pinch") * dt
         )
 
         robot_qpos, robot_qvel = self._utils.robot_get_obs(
@@ -360,7 +360,7 @@ class MujocoUR10eEnv(get_base_ur10e_env(MujocoRobotEnv)):
         )
 
     def _get_gripper_xpos(self):
-        body_id = self._model_names.body_name2id["robot0:gripper_link"]
+        body_id = self._model_names.body_name2id["pinchper_link"]
         return self.data.xpos[body_id]
 
     def _render_callback(self):
@@ -407,7 +407,7 @@ class MujocoUR10eEnv(get_base_ur10e_env(MujocoRobotEnv)):
         # Move end effector into position.
         gripper_target = np.array(
             [-0.498, 0.005, -0.431 + self.gripper_extra_height]
-        ) + self._utils.get_site_xpos(self.model, self.data, "robot0:grip")
+        ) + self._utils.get_site_xpos(self.model, self.data, "pinch")
         gripper_rotation = np.array([1.0, 0.0, 1.0, 0.0])
         self._utils.set_mocap_pos(self.model, self.data, "robot0:mocap", gripper_target)
         self._utils.set_mocap_quat(
@@ -417,7 +417,7 @@ class MujocoUR10eEnv(get_base_ur10e_env(MujocoRobotEnv)):
             self._mujoco.mj_step(self.model, self.data, nstep=self.n_substeps)
         # Extract information for sampling goals.
         self.initial_gripper_xpos = self._utils.get_site_xpos(
-            self.model, self.data, "robot0:grip"
+            self.model, self.data, "pinch"
         ).copy()
         if self.has_object:
             self.height_offset = self._utils.get_site_xpos(

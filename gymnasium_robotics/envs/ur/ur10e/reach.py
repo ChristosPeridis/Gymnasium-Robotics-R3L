@@ -116,9 +116,20 @@ class MujocoUR10eReachEnv(MujocoUR10eEnv, EzPickle):
 
     def __init__(self, reward_type: str = "sparse", **kwargs):
         initial_qpos = {
-            "robot0:slide0": 0.4049,
-            "robot0:slide1": 0.48,
-            "robot0:slide2": 0.0,
+            "shoulder_pan_joint": 0.0,
+            "shoulder_lift_joint": -1.56,
+            "elbow_joint": 1.58,
+            "wrist_1_joint": 3.15,
+            "wrist_2_joint": -1.57,
+            "wrist_3_joint": 0.0,
+            "right_driver_joint": 0.798,
+            "right_coupler_joint": 0.0,
+            "right_spring_link_joint": 0.798,
+            "right_follower_joint": -0.8,
+            "left_driver_joint": 0.798,
+            "left_coupler_joint": 0.0,
+            "left_spring_link_joint": 0.798,
+            "left_follower_joint": -0.8,
         }
         MujocoUR10eEnv.__init__(
             self,

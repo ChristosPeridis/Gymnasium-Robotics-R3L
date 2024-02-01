@@ -93,7 +93,7 @@ def register_robotics_envs():
         #UR10e
         register(
             id=f"UR10eReach{suffix}-v0",
-             entry_point="gymnasium_robotics.envs.ur.ur10e.reach:MujocoUr10eReachEnv",
+             entry_point="gymnasium_robotics.envs.ur.ur10e.reach:MujocoUR10eReachEnv",
             kwargs=kwargs,
             max_episode_steps=50,
         )

@@ -2,7 +2,7 @@ import os
 
 from gymnasium.utils.ezpickle import EzPickle
 
-from gymnasium_robotics.envs.UR10e import MujocoUR10eEnv, MujocoPyUR10eEnv
+from gymnasium_robotics.envs.ur.ur10e import MujocoUR10eEnv, MujocoPyUR10eEnv
 
 # Ensure we get the path separator correct on windows
 MODEL_XML_PATH = os.path.join("ur10e_gripper", "scene-testing.xml")
@@ -135,7 +135,7 @@ class MujocoUR10eReachEnv(MujocoUR10eEnv, EzPickle):
             self,
             model_path=MODEL_XML_PATH,
             has_object=False,
-            block_gripper=True,
+            block_gripper=False,
             n_substeps=20,
             gripper_extra_height=0.2,
             target_in_the_air=True,

@@ -401,20 +401,22 @@ class MujocoUR10eEnv(get_base_ur10e_env(MujocoRobotEnv)):
     def _env_setup(self, initial_qpos):
         for name, value in initial_qpos.items():
             self._utils.set_joint_qpos(self.model, self.data, name, value)
+            print("Joint qpos", name, ":", self.mujoco_utils.get_joint_qpos(self.model, self.data, name))
+        self._utils.set_mocap_pos(self.model, self.data, "robot0:mocap", np.array([-0.17421, 0.8446, 0.895]))
         self._utils.reset_mocap_welds(self.model, self.data)
         self._mujoco.mj_forward(self.model, self.data)
 
         # Move end effector into position.
-        gripper_target = np.array(
-            [-0.498, 0.005, -0.431 + self.gripper_extra_height]
-        ) + self._utils.get_site_xpos(self.model, self.data, "pinch")
-        gripper_rotation = np.array([1.0, 0.0, 1.0, 0.0])
-        self._utils.set_mocap_pos(self.model, self.data, "robot0:mocap", gripper_target)
-        self._utils.set_mocap_quat(
-            self.model, self.data, "robot0:mocap", gripper_rotation
-        )
-        for _ in range(10):
-            self._mujoco.mj_step(self.model, self.data, nstep=self.n_substeps)
+       # gripper_target = np.array(
+       #     [-0.498, 0.005, -0.431 + self.gripper_extra_height]
+       # ) + self._utils.get_site_xpos(self.model, self.data, "pinch")
+       # gripper_rotation = np.array([1.0, 0.0, 1.0, 0.0])
+       # self._utils.set_mocap_pos(self.model, self.data, "robot0:mocap", gripper_target)
+       # self._utils.set_mocap_quat(
+       #     self.model, self.data, "robot0:mocap", gripper_rotation
+       # )
+        #for _ in range(10):
+         #   self._mujoco.mj_step(self.model, self.data, nstep=self.n_substeps)
         # Extract information for sampling goals.
         self.initial_gripper_xpos = self._utils.get_site_xpos(
             self.model, self.data, "pinch"

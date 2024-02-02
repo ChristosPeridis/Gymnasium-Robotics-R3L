@@ -116,6 +116,10 @@ def get_site_jacp(model, data, site_id):
 
     return jacp
 
+def set_actuator_ctrl(model, data, name, value):
+    """Set the actuator control (ctrl) of the model."""
+    actuator_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, name)
+    data.ctrl[actuator_id] = value
 
 def get_site_jacr(model, data, site_id):
     """Return the Jacobian' rotational component of the end-effector of

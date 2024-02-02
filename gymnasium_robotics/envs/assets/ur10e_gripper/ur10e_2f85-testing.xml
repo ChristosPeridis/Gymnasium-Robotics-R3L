@@ -334,9 +334,7 @@
         solref="0.005 1"/>
     </equality>
 
-    <equality>
-      <weld body1="robot0:mocap" body2="base2" solimp="0.9 0.95 0.001" solref="0.02 1"></weld>
-    </equality>
+    
   
     <actuator>
       <general class="size4" name="shoulder_pan" joint="shoulder_pan_joint"/>

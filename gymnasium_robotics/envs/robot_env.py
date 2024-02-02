@@ -73,6 +73,8 @@ class BaseRobotEnv(GoalEnv):
 
         self.initial_qpos = initial_qpos
 
+        print(f"Initial qpos: {self.initial_qpos}")
+
         self.width = width
         self.height = height
         self._initialize_simulation()
@@ -276,6 +278,10 @@ class MujocoRobotEnv(BaseRobotEnv):
 
         self._mujoco = mujoco
         self._utils = mujoco_utils
+        
+        #Note: Added for debugging purposes
+        self.mujoco = mujoco
+        self.mujoco_utils = mujoco_utils
 
         super().__init__(**kwargs)
 
